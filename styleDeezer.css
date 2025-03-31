@@ -17,3 +17,49 @@ body {
     height: 200px;
     object-fit: cover;
 }
+
+#playlist {
+    padding-right: 10px;
+}
+
+.playlist-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 10px;
+    background-color: #0000000a;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.playlist-item:hover {
+    background-color: #0000002c;
+}
+
+.playlist-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.playlist-item .info {
+    flex-grow: 1;
+}
+
+.playlist-item h6 {
+    margin-bottom: 2px;
+    font-size: 0.9rem;
+}
+
+.playlist-item p {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+#playlist-container {
+    margin-left: auto;
+    padding-left: 30px;
+}
+

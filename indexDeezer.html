@@ -22,7 +22,22 @@
             </div>
         </div>
 
-        <div id="resultados" class="row mt-4"></div>
+        <div class="row mt-4">
+            <div class="col-lg-9 col-md-8" id="resultados-container">
+                <div id="resultados" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
+            </div>
+            
+            <div class="col-lg-3 col-md-4" id="playlist-container">
+                <div class="card h-100 sticky-top" style="top: 20px;">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">🎵 Mi Playlist</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="playlist" style="height: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div id="caratulaAlbum" class="col-md-4 mb-4" style="display: none;">
             <div class="card cancion h-100">
@@ -31,11 +46,13 @@
                     <h5 class="titulo card-title"></h5>
                     <p class="artista card-text"></p>
                     <audio controls class="w-100"></audio>
+                    <button class="btn btn-success mt-2 d-block mx-auto">Añadir a playlist</button>
                 </div>
             </div>
         </div>
 
         <script src="scriptDeezer.js"></script>
+    </div>
 </body>
 
 </html>
