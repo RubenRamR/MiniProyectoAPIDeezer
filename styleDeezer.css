@@ -1,0 +1,19 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+}
+
+.card.cancion {
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.card.cancion:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.portada {
+    height: 200px;
+    object-fit: cover;
+}
