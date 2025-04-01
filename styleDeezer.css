@@ -1,6 +1,20 @@
 body {
-    background-color: #f8f9fa;
+    background-color: #34495e;
     font-family: 'Arial', sans-serif;
+}
+
+h1{
+	color: white;
+}
+
+#btnBuscar {
+	background: #626567;
+	border: 2px solid white;
+}
+
+#btnBuscar:hover {
+    background-color: #4e5251; 
+    border-color: #ffffff; 
 }
 
 .card.cancion {
@@ -14,22 +28,37 @@ body {
 }
 
 .portada {
-    height: 200px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
+    margin: 0 auto;
+    padding: 16px;
 }
 
 #playlist {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    height: auto;
     padding-right: 10px;
+	padding-bottom:10px;
+    margin-top: 0px;
+	width: 100%;
+	background-color:#d6dbdf;
 }
 
 .playlist-item {
     display: flex;
     align-items: center;
-    padding: 12px;
-    margin-bottom: 10px;
-    background-color: #0000000a;
-    border-radius: 10px;
-    cursor: pointer;
+    justify-content: space-between;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-bottom: 20px; 
+	width: 100%;
 }
 
 .playlist-item:hover {
@@ -37,18 +66,22 @@ body {
 }
 
 .playlist-item img {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
     border-radius: 5px;
-    margin-right: 10px;
+    margin-right: 15px;
 }
 
 .playlist-item .info {
-    flex-grow: 1;
+     display: flex;
+    flex-direction: column;
+    justify-content: center;  
+    flex-grow: 1;  /
 }
 
 .playlist-item h6 {
-    margin-bottom: 2px;
+    margin: 0;
     font-size: 0.9rem;
 }
 
@@ -58,8 +91,142 @@ body {
     margin-bottom: 0;
 }
 
+.playlist-item .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+}
+
+.playlist-item .btn {
+    padding: 5px 10px;
+    font-size: 14px;
+	border-radius: 5px;  
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none; 
+    color: white;
+    display: inline-block;
+}
+.playlist-item .btn-play, 
+.playlist-item .btn-pause {
+    width: 100%;
+    margin-top: 10px;
+    background-color: #1a5276;
+    border: none; 
+	padding: 5px 15px;
+	width: auto;
+}
+
+.playlist-item .btn-play:hover, 
+.playlist-item .btn-pause:hover {
+    background-color: #3498db; 
+}
+
+.playlist-item .btn-danger {
+    background-color: #dc3545;  
+}
+
+
+.playlist-item .btn-danger:hover {
+    opacity: 0.8;  
+}
+
+.playlist-item .btn-danger i {
+    margin: 0;
+}
+
 #playlist-container {
     margin-left: auto;
     padding-left: 30px;
+    position: static;
+    top: 20px;
+    height: auto;
+
 }
 
+audio {
+    width: 100%;
+}
+
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+
+.cancion .portada {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+.cancion .card-body {
+    flex-grow: 1;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.card .btn-success {
+    width: 100%;
+    margin-top: 10px;
+	background-color: #1a5276;
+	border: none;
+}
+
+.card .btn-success:hover {
+    background-color: #3498db; 
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+    padding: 10px;
+}
+
+.card-footer .btn-play, .card-footer .btn-pause {
+    margin-left: 5px;
+}
+
+.card-footer .duracion {
+    font-size: 12px;
+    color: #555;
+}
+
+
+.btn-danger {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: transparent;
+    border: none;
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.playlist-item .btn-danger:hover {
+    color: darkred;
+}
+
+.playlist-item .audio-player {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.playlist-item .btn-play,
+.playlist-item .btn-pause {
+    margin-top: 10px;
+}
+
+#playlist-container .card .card-header {
+    background-color: #5d6d7e !important;  /* Utiliza !important para asegurarte de que se aplique */
+    color: white !important;
+    text-align: center;
+    font-size: 1.25rem;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+}

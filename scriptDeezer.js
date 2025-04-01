@@ -9,9 +9,21 @@ campoBusqueda.addEventListener("keypress", (e) => {
     if (e.key === "Enter") buscarCanciones();
 });
 
+// Limpiar resultados al borrar texto
+campoBusqueda.addEventListener("input", () => {
+    if (!campoBusqueda.value.trim()) {
+        resultados.innerHTML = "";  
+    }
+});
+
 function buscarCanciones() {
     const query = campoBusqueda.value.trim();
-    if (!query) return alert("¡Escribe algo!");
+
+    // Limpiar resultados si no hay texto
+    if (!query) {
+        resultados.innerHTML = "";  
+        return alert("¡Escribe algo!");
+    }
 
     resultados.innerHTML = "<p class='text-center'>Buscando...</p>";
 
@@ -78,21 +90,23 @@ function añadirAPlaylist(cancion) {
     playlistItem.dataset.songId = cancion.id;
     
     playlistItem.innerHTML = `
+    <div class="playlist-item-inner">
         <img src="${cancion.album.cover_small}" alt="${cancion.title}">
         <div class="info">
             <h6>${cancion.title}</h6>
             <p>${cancion.artist.name}</p>
         </div>
-        
         <audio class="audio-player" src="${cancion.preview}" preload="auto"></audio>
         <p class="duracion">${formatearDuracion(cancion.duration)}</p>
-        <button class="btn btn-play" >Play</button>
-        <button class="btn btn-pause style="display: none;">Pause</button>
 
-        <button class="btn btn-danger btn-sm eliminar-btn">Eliminar</button>
-        
-    `;
-
+        <!-- Contenedor de los botones (Play, Pause, Eliminar) -->
+        <div class="controls">
+            <button class="btn btn-play">Play</button>
+            <button class="btn btn-pause" style="display: none;">Pause</button>
+            <button class="btn btn-danger btn-sm eliminar-btn"> <i class="fas fa-trash"></i></button>
+        </div>
+    </div>
+`;
     playlist.appendChild(playlistItem);
 
     const btnEliminar = playlistItem.querySelector(".eliminar-btn");
@@ -106,13 +120,11 @@ function añadirAPlaylist(cancion) {
     const audio = playlistItem.querySelector("audio");
 
     btnPlay.addEventListener("click", () => {
-        reproducirCancion(playlistItem, audio, btnPlay, btnPause);
-    });
-
-    btnPause.addEventListener("click", () => {
-        pausarCancion(audio, btnPlay, btnPause);
-    });
-    
+    reproducirCancion(audio, btnPlay, btnPause); 
+	});
+	btnPause.addEventListener("click", () => {
+		pausarCancion(audio, btnPlay, btnPause);
+	});
 }
 
 function eliminarDePlaylist(id) {
@@ -122,9 +134,21 @@ function eliminarDePlaylist(id) {
     }
 }
 
-function reproducirCancion(item, audio, btnPlay, btnPause) {
+function reproducirCancion(audio, btnPlay, btnPause) {
     const todosLosAudio = document.querySelectorAll("audio");
-    todosLosAudio.forEach(audio => audio.pause());
+    todosLosAudio.forEach(aud => {
+        if (aud !== audio) {
+            aud.pause(); // Pausa otros audios
+        const btnPauseOtro = aud.parentElement.querySelector(".btn-pause");
+            const btnPlayOtro = aud.parentElement.querySelector(".btn-play");
+            if (btnPauseOtro) {
+                btnPauseOtro.style.display = "none";
+            }
+            if (btnPlayOtro) {
+                btnPlayOtro.style.display = "inline-block";
+            }
+        }
+    });
 
     
     audio.currentTime = 0; 
@@ -149,3 +173,31 @@ function pausarCancion(audio, btnPlay, btnPause) {
     btnPlay.style.display = "inline-block";
     btnPause.style.display = "none";
 }
+
+document.addEventListener("DOMContentLoaded", precargarPlaylist);
+
+function precargarPlaylist() {
+    const cancionesDeseadas = [
+        "Bad Bunny",
+        "Arctic Monkeys",
+        "Coldplay",
+        "Danny Ocean",
+        "Maroon 5"
+    ];
+
+    cancionesDeseadas.forEach(query => buscarYAgregar(query));
+}
+
+function buscarYAgregar(query) {
+    const url = `https://api.deezer.com/search?q=${encodeURIComponent(query)}&limit=1&output=jsonp&callback=procesarCancion`;
+
+    const script = document.createElement("script");
+    script.src = url;
+    document.body.appendChild(script);
+}
+
+window.procesarCancion = function (data) {
+    if (data && data.data && data.data.length > 0) {
+        añadirAPlaylist(data.data[0]); //
+    }
+};
