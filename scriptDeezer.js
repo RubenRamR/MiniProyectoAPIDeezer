@@ -77,8 +77,20 @@ function añadirAPlaylist(cancion) {
             <h6>${cancion.title}</h6>
             <p>${cancion.artist.name}</p>
         </div>
+        <button class="btn btn-danger btn-sm">Eliminar</button>
         
     `;
 
+    playlistItem.querySelector("button").addEventListener("click", function() {
+        playlistItem.remove();
+    });
+
     playlist.appendChild(playlistItem);
+}
+
+function eliminarDePlaylist(id) {
+    const playlistItem = document.querySelector(`#playlist [data-song-id="${id}"]`);
+    if (playlistItem) {
+        playlistItem.remove();
+    }
 }
