@@ -83,21 +83,23 @@ function añadirAPlaylist(cancion) {
             <h6>${cancion.title}</h6>
             <p>${cancion.artist.name}</p>
         </div>
-        <button class="btn btn-danger btn-sm">Eliminar</button>
+        
         <audio class="audio-player" src="${cancion.preview}" preload="auto"></audio>
         <p class="duracion">${formatearDuracion(cancion.duration)}</p>
         <button class="btn btn-play" >Play</button>
         <button class="btn btn-pause style="display: none;">Pause</button>
+
+        <button class="btn btn-danger btn-sm eliminar-btn">Eliminar</button>
         
     `;
 
     playlist.appendChild(playlistItem);
 
-    playlistItem.querySelector("button").addEventListener("click", function() {
-        playlistItem.remove();
-    });
+    const btnEliminar = playlistItem.querySelector(".eliminar-btn");
 
-  
+    btnEliminar.addEventListener("click", () => {
+        eliminarDePlaylist(cancion.id);
+    });
 
     const btnPlay = playlistItem.querySelector(".btn-play");
     const btnPause = playlistItem.querySelector(".btn-pause");
