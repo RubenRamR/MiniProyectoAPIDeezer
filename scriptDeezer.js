@@ -61,6 +61,12 @@ function mostrarResultados(canciones) {
     });
 }
 
+function formatearDuracion(segundos) {
+    const minutos = Math.floor(segundos / 60);
+    const segundosRestantes = segundos % 60;
+    return `${minutos}:${segundosRestantes < 10 ? '0' : ''}${segundosRestantes}`;
+}
+
 function añadirAPlaylist(cancion) {
     if (document.querySelector(`#playlist [data-song-id="${cancion.id}"]`)) {
         alert("Esta canción ya está en tu playlist");
@@ -78,14 +84,33 @@ function añadirAPlaylist(cancion) {
             <p>${cancion.artist.name}</p>
         </div>
         <button class="btn btn-danger btn-sm">Eliminar</button>
+        <audio class="audio-player" src="${cancion.preview}" preload="auto"></audio>
+        <p class="duracion">${formatearDuracion(cancion.duration)}</p>
+        <button class="btn btn-play" >Play</button>
+        <button class="btn btn-pause style="display: none;">Pause</button>
         
     `;
+
+    playlist.appendChild(playlistItem);
 
     playlistItem.querySelector("button").addEventListener("click", function() {
         playlistItem.remove();
     });
 
-    playlist.appendChild(playlistItem);
+  
+
+    const btnPlay = playlistItem.querySelector(".btn-play");
+    const btnPause = playlistItem.querySelector(".btn-pause");
+    const audio = playlistItem.querySelector("audio");
+
+    btnPlay.addEventListener("click", () => {
+        reproducirCancion(playlistItem, audio, btnPlay, btnPause);
+    });
+
+    btnPause.addEventListener("click", () => {
+        pausarCancion(audio, btnPlay, btnPause);
+    });
+    
 }
 
 function eliminarDePlaylist(id) {
@@ -93,4 +118,32 @@ function eliminarDePlaylist(id) {
     if (playlistItem) {
         playlistItem.remove();
     }
+}
+
+function reproducirCancion(item, audio, btnPlay, btnPause) {
+    const todosLosAudio = document.querySelectorAll("audio");
+    todosLosAudio.forEach(audio => audio.pause());
+
+    
+    audio.currentTime = 0; 
+    audio.play(); 
+
+    // cambia btns
+    btnPlay.style.display = "none";
+    btnPause.style.display = "inline-block";
+
+    // reinicia btns
+    audio.addEventListener("ended", () => {
+        btnPlay.style.display = "inline-block";
+        btnPause.style.display = "none";
+    });
+}
+
+
+function pausarCancion(audio, btnPlay, btnPause) {
+    audio.pause();
+
+    // Cambia btns
+    btnPlay.style.display = "inline-block";
+    btnPause.style.display = "none";
 }
